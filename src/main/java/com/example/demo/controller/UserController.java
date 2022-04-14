@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
+@RequestMapping(value = "/api")
 public class UserController {
     private final UserServiceImpl userService;
 
@@ -21,6 +23,7 @@ public class UserController {
     @PostMapping(value = "/users")
     public ResponseEntity<?> create(@RequestBody User user) {
         userService.create(user);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -30,6 +33,18 @@ public class UserController {
 
         return users != null && !users.isEmpty()
                 ? new ResponseEntity<>(users, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // @GetMapping(value = "/api/user/{login}/{password}")
+    @PostMapping(value = "/users/login")
+    public ResponseEntity<?> read(@RequestParam("login") String login, @RequestParam("password") String password) {
+        // read from headers
+
+        final User user = userService.readByLoginAndPassword(login, password);
+
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -43,9 +58,9 @@ public class UserController {
 
     }
 
-    @PutMapping(value = "/users/{id}")
-    public ResponseEntity<?> update(@PathVariable(name = "id") Long id, @RequestBody User user) {
-        final boolean updated = userService.update(user, id);
+    @PutMapping(value = "/users")
+    public ResponseEntity<?> update(@RequestBody User user) {
+        final boolean updated = userService.update(user, user.getId());
 
         return updated
                 ? new ResponseEntity<>(HttpStatus.OK)

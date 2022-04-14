@@ -41,7 +41,7 @@ public class Main {
 //        Distribution distribution = new Distribution(date);
 //        Review review = new Review(6, "normal...");
 
-        List<User> users = userService.readAll();
-        System.out.println(users);
+        User user = userService.readByLoginAndPassword("student333", "password");
+        System.out.println(user);
     }
 }

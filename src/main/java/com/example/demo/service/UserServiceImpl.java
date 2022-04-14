@@ -61,4 +61,18 @@ public class UserServiceImpl implements BaseService<User, Long>{
         }
         return false;
     }
+
+    public User readByLoginAndPassword(String login, String password) {
+        User user = null;
+        List<User> users = null;
+        try(Session session = factory.getCurrentSession()) {
+            session.beginTransaction();
+            users = session.createQuery("From " + User.class.getSimpleName() + " where login like \'" + login + "\' and password like \'" + password + "\'").list();
+            if (!users.isEmpty()) {
+                user = users.get(0);
+            }
+        }
+        return user;
+    }
+
 }
