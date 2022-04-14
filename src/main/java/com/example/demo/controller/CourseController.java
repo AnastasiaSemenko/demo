@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping(value = "/api")
 public class CourseController {
     private final CourseServiceImpl courseService;
 

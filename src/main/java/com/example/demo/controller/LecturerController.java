@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping(value = "/api")
 public class LecturerController {
     private final LecturerServiceImpl lecturerService;
 

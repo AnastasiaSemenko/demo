@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping(value = "/api")
 public class StudentController {
     private final StudentServiceImpl studentService;
 
