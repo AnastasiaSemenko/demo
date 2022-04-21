@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Student;
 import com.example.demo.model.User;
 import com.example.demo.service.StudentServiceImpl;
+import com.example.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,17 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class StudentController {
     private final StudentServiceImpl studentService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public StudentController(StudentServiceImpl studentService) {
+    public StudentController(StudentServiceImpl studentService, UserServiceImpl userService) {
         this.studentService = studentService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/students")
     public ResponseEntity<?> create(@RequestBody Student student) {
+        userService.create(student.getAccount());
         studentService.create(student);
 
         return new ResponseEntity<>(HttpStatus.CREATED);

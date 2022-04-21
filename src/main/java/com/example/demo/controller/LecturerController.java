@@ -4,6 +4,7 @@ import com.example.demo.model.Lecturer;
 import com.example.demo.model.Student;
 import com.example.demo.service.LecturerServiceImpl;
 import com.example.demo.service.StudentServiceImpl;
+import com.example.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,17 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class LecturerController {
     private final LecturerServiceImpl lecturerService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public LecturerController(LecturerServiceImpl lecturerService) {
+    public LecturerController(LecturerServiceImpl lecturerService, UserServiceImpl userService) {
         this.lecturerService = lecturerService;
+        this.userService = userService;
     }
 
     @PostMapping(value = "/lecturers")
     public ResponseEntity<?> create(@RequestBody Lecturer lecturer) {
+        userService.create(lecturer.getAccount());
         lecturerService.create(lecturer);
 
         return new ResponseEntity<>(HttpStatus.CREATED);

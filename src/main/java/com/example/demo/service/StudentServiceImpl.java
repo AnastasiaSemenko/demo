@@ -44,6 +44,8 @@ public class StudentServiceImpl implements BaseService<Student, Long>{
             session.beginTransaction();
             Student entity = session.get(Student.class, id);
             if (entity != null) {
+                entity.getAccount().setLogin(student.getAccount().getLogin());
+                entity.getAccount().setPassword(student.getAccount().getPassword());
                 entity.setName(student.getName());
                 entity.setSurname(student.getSurname());
                 entity.setPhone(student.getPhone());

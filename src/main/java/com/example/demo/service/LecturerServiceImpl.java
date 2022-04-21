@@ -45,6 +45,8 @@ public class LecturerServiceImpl implements BaseService<Lecturer, Long> {
             session.beginTransaction();
             Lecturer entity = session.get(Lecturer.class, id);
             if (entity != null) {
+                entity.getAccount().setLogin(lecturer.getAccount().getLogin());
+                entity.getAccount().setPassword(lecturer.getAccount().getPassword());
                 entity.setName(lecturer.getName());
                 entity.setSurname(lecturer.getSurname());
                 entity.setPhone(lecturer.getPhone());
