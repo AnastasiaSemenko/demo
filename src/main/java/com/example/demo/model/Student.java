@@ -34,7 +34,7 @@ public class Student implements Serializable {
             CascadeType.MERGE,
             CascadeType.REFRESH},
             mappedBy = "student")
-    private List<Distribution> distributions;
+    transient private List<Distribution> distributions;
 
     public Student() {
     }

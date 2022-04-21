@@ -39,7 +39,7 @@ public class Course implements Serializable {
             CascadeType.MERGE,
             CascadeType.REFRESH},
             mappedBy = "course")
-    private List<Distribution> distributions;
+    transient private List<Distribution> distributions;
 
     public Course() {
     }
@@ -113,6 +113,7 @@ public class Course implements Serializable {
     public void setDistribution(List<Distribution> distributions) {
         this.distributions = distributions;
     }
+
 
     @Override
     public String toString() {

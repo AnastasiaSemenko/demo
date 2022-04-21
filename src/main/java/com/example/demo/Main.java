@@ -14,17 +14,6 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-//
-//        SessionFactory factory = new Configuration()
-//                .configure("hibernate.cfg.xml")
-//                .addAnnotatedClass(User.class)
-//                .addAnnotatedClass(Student.class)
-//                .addAnnotatedClass(Lecturer.class)
-//                .addAnnotatedClass(Course.class)
-//                .addAnnotatedClass(Distribution.class)
-//                .addAnnotatedClass(Review.class)
-//                .buildSessionFactory();
-
 
         UserServiceImpl userService = new UserServiceImpl();
         StudentServiceImpl studentService = new StudentServiceImpl();
@@ -43,5 +32,10 @@ public class Main {
 
         User user = userService.readByLoginAndPassword("student333", "password");
         System.out.println(user);
+
+        List<Course> courses = courseService.readAll();
+        for (Course c : courses) {
+            System.out.println(c);
+        }
     }
 }

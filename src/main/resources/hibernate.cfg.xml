@@ -4,10 +4,10 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://sql4.freesqldatabase.com:3306/sql4484486?useSSL=false</property>
+        <property name="connection.url">jdbc:mysql://remotemysql.com:3306/i2KoQWDIHv?useSSL=false</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.username">sql4484486</property>
-        <property name="connection.password">uKvsnNsIKg</property>
+        <property name="connection.username">i2KoQWDIHv</property>
+        <property name="connection.password">5JM7cE75hx</property>
 
         <property name="current_session_context_class">thread</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>

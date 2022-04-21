@@ -37,7 +37,7 @@ public class Lecturer implements Serializable {
             CascadeType.MERGE,
             CascadeType.REFRESH},
             mappedBy = "lecturer")
-    private List<Course> courses;
+    transient private List<Course> courses;
 
     public Lecturer() {
     }

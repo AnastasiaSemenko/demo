@@ -1,6 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Lecturer;
+import com.example.demo.model.Student;
 import com.example.demo.model.User;
+import com.example.demo.model.enums.Roles;
+import com.example.demo.service.LecturerServiceImpl;
+import com.example.demo.service.StudentServiceImpl;
 import com.example.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +19,14 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class UserController {
     private final UserServiceImpl userService;
+    private final StudentServiceImpl studentService;
+    private final LecturerServiceImpl lecturerService;
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, StudentServiceImpl studentService, LecturerServiceImpl lecturerService) {
         this.userService = userService;
+        this.studentService = studentService;
+        this.lecturerService = lecturerService;
     }
 
     @PostMapping(value = "/users")
@@ -36,16 +45,24 @@ public class UserController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    // @GetMapping(value = "/api/user/{login}/{password}")
     @PostMapping(value = "/users/login")
     public ResponseEntity<?> read(@RequestParam("login") String login, @RequestParam("password") String password) {
-        // read from headers
-
         final User user = userService.readByLoginAndPassword(login, password);
-
-        return user != null
-                ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        final Student student;
+        final Lecturer lecturer;
+        if (user != null) {
+            switch (user.getRole()) {
+                case STUDENT:
+                    student = studentService.read(user.getId());
+                    return new ResponseEntity<>(student, HttpStatus.OK);
+                case TEACHER:
+                    lecturer = lecturerService.read(user.getId());
+                    return new ResponseEntity<>(lecturer, HttpStatus.OK);
+                case ADMIN:
+                    return new ResponseEntity<>(user, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/users/{id}")
