@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Course;
 import com.example.demo.service.CourseServiceImpl;
+import com.example.demo.service.LecturerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +15,17 @@ import java.util.List;
 @RequestMapping(value = "/api")
 public class CourseController {
     private final CourseServiceImpl courseService;
+    private final LecturerServiceImpl lecturerService;
 
     @Autowired
-    public CourseController(CourseServiceImpl courseService) {
+    public CourseController(CourseServiceImpl courseService, LecturerServiceImpl lecturerService) {
         this.courseService = courseService;
+        this.lecturerService = lecturerService;
     }
 
     @PostMapping(value = "/courses")
     public ResponseEntity<?> create(@RequestBody Course course) {
+        course.setLecturer(lecturerService.read(course.getLecturer().getAccount().getId()));
         courseService.create(course);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -47,6 +51,7 @@ public class CourseController {
 
     @PutMapping(value = "/courses")
     public ResponseEntity<?> update(@RequestBody Course course) {
+        course.setLecturer(lecturerService.read(course.getLecturer().getAccount().getId()));
         final boolean updated = courseService.update(course, course.getId());
 
         return updated
