@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -30,9 +31,6 @@ public class Main {
 //        Distribution distribution = new Distribution(date);
 //        Review review = new Review(6, "normal...");
 
-        List<Distribution> distributions = distributionService.readByStudent(8L);
-        for (Distribution d : distributions) {
-            System.out.println(d);
-        }
+
     }
 }
