@@ -25,6 +25,14 @@ public class DistributionServiceImpl implements  BaseService<Distribution, Long>
         return distributions;
     }
 
+    public List<Distribution> readByStudent(Long id) {
+        List<Distribution> distributions = null;
+        try (Session session = factory.openSession()) {
+            distributions = session.createQuery("From " + Distribution.class.getSimpleName() + " where student_id = " + id).list();
+        }
+        return distributions;
+    }
+
     @Override
     public Distribution read(Long id) {
         Distribution distribution = null;

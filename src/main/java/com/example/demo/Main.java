@@ -30,12 +30,9 @@ public class Main {
 //        Distribution distribution = new Distribution(date);
 //        Review review = new Review(6, "normal...");
 
-        User user = userService.readByLoginAndPassword("student333", "password");
-        System.out.println(user);
-
-        List<Course> courses = courseService.readAll();
-        for (Course c : courses) {
-            System.out.println(c);
+        List<Distribution> distributions = distributionService.readByStudent(8L);
+        for (Distribution d : distributions) {
+            System.out.println(d);
         }
     }
 }

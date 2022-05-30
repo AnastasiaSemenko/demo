@@ -38,6 +38,15 @@ public class DistributionController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping(value = "/distributions/by/student/{id}")
+    public ResponseEntity<?> readByStudent(@PathVariable(name = "id") Long id) {
+        final List<Distribution> distributions = distributionService.readByStudent(id);
+
+        return distributions != null && !distributions.isEmpty()
+                ? new ResponseEntity<>(distributions, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping(value = "/distributions/{id}")
     public ResponseEntity<Distribution> read(@PathVariable(name = "id") Long id) {
         final Distribution distribution = distributionService.read(id);
@@ -46,6 +55,8 @@ public class DistributionController {
                 ? new ResponseEntity<>(distribution, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    // @RequestParam("login") String login
+
 
     @PutMapping(value = "/distributions")
     public ResponseEntity<?> update(@RequestBody Distribution distribution) {
