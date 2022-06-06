@@ -4,10 +4,11 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">jdbc:mysql://remotemysql.com:3306/i2KoQWDIHv?useSSL=false</property>
+
+        <property name="connection.url">jdbc:mysql://localhost:3306/elective?characterEncoding=utf8</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="connection.username">i2KoQWDIHv</property>
-        <property name="connection.password">5JM7cE75hx</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">password</property>
 
         <property name="current_session_context_class">thread</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>

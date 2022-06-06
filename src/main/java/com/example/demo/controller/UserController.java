@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Lecturer;
 import com.example.demo.model.Student;
 import com.example.demo.model.User;
+import com.example.demo.model.enums.Education;
 import com.example.demo.model.enums.Roles;
 import com.example.demo.service.LecturerServiceImpl;
 import com.example.demo.service.StudentServiceImpl;
@@ -32,7 +33,28 @@ public class UserController {
     @PostMapping(value = "/users")
     public ResponseEntity<?> create(@RequestBody User user) {
         userService.create(user);
-
+        switch (user.getRole()) {
+            case STUDENT:
+                Student student = new Student();
+                student.setAccount(user);
+                student.setAge(0);
+                student.setEmail("def");
+                student.setPhone("def");
+                student.setSurname("def");
+                student.setName("def");
+                studentService.create(student);
+                break;
+            case TEACHER:
+                Lecturer lecturer = new Lecturer();
+                lecturer.setAccount(user);
+                lecturer.setEducation(Education.ASSISTANT);
+                lecturer.setEmail("def");
+                lecturer.setPhone("def");
+                lecturer.setSurname("def");
+                lecturer.setName("def");
+                lecturerService.create(lecturer);
+                break;
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -47,9 +69,9 @@ public class UserController {
 
     @PostMapping(value = "/users/login")
     public ResponseEntity<?> read(@RequestParam("login") String login, @RequestParam("password") String password) {
-        final User user = userService.readByLoginAndPassword(login, password);
-        final Student student;
-        final Lecturer lecturer;
+        User user = userService.readByLoginAndPassword(login, password);
+        Student student;
+        Lecturer lecturer;
         if (user != null) {
             switch (user.getRole()) {
                 case STUDENT:
